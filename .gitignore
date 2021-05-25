@@ -1,0 +1,9 @@
+# Build folder
+**/build
+
+# Settings files
+**/.clwb
+**/.idea
+
+# Generated files
+**/**.user
