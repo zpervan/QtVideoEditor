@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
-  build_and_run:
+  setup_and_build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,4 +17,7 @@ jobs:
           sudo ./Scripts/install.sh
 
       - name: Build Project | All
-        run: bazel build //...
+        run: |
+          mkdir -p build && cd build
+          cmake ..
+          cmake --build .
