@@ -67,38 +67,34 @@ Window {
                 id: gridView
                 anchors.topMargin: 16
                 anchors.fill: parent
-                cellHeight: 70
+                cellHeight: 150
+                cellWidth: 150
                 model: ListModel {
                     ListElement {
                         name: "Grey"
-                        colorCode: "grey"
                     }
 
                     ListElement {
                         name: "Red"
-                        colorCode: "red"
                     }
 
                     ListElement {
-                        name: "Blue"
-                        colorCode: "blue"
-                    }
-
-                    ListElement {
-                        name: "Green"
-                        colorCode: "green"
+                        name: "Testing"
                     }
                 }
-                cellWidth: 70
+
                 delegate: Item {
-                    x: 5
-                    height: 50
                     Column {
                         Rectangle {
-                            width: 40
-                            height: 40
-                            color: colorCode
+                            width: 120
+                            height: 120
                             anchors.horizontalCenter: parent.horizontalCenter
+                            Image { 
+                                id: thumbnail 
+                                anchors.fill: parent
+                                cache: false 
+                                source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Pictures/example_picture.jpg"
+                            } 
                         }
 
                         Text {
@@ -107,7 +103,7 @@ Window {
                             font.bold: true
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
-                        spacing: 5
+                        spacing: 10
                     }
                 }
             }
