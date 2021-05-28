@@ -23,7 +23,8 @@ apt install -y build-essential \
   qtmultimedia5-dev \
   qtquickcontrols2-5-dev \
   qml-module-qtquick-controls2 \
-  libqt5svg5-dev
+  libqt5svg5-dev \
+  libopencv-dev
   
 echo -e " -- \e[33mCreating temp folder\e[0m"
 mkdir temp && cd temp || exit
