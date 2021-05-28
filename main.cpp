@@ -1,14 +1,18 @@
 #include "GUI/menu.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQuickView>
 
 int main(int argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
 
-  qmlRegisterType<Menu>("custom.widget.menu", 1, 0, "Menu");
+  Menu menu;
 
   QQmlApplicationEngine engine;
+  engine.rootContext()->setContextProperty("menu", &menu);
+
   engine.load("qrc:/main.qml");
 
   if (engine.rootObjects().isEmpty()) {

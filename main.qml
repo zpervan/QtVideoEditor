@@ -3,10 +3,9 @@ import QtQuick.Window 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs.qml 1.0
 import QtQuick.Controls 2.3
-import custom.widget.menu 1.0
+//import custom.widget.menu 1.0
 
 Window {
-    id: window
     visible: true
     width: 1024
     height: 760
@@ -30,14 +29,17 @@ Window {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             title: qsTr("Menu")
 
-            ComboBox {
-                id: comboBox
-                y: 41
-                height: 40
-                anchors.left: parent.left
-                anchors.leftMargin: 13
-                anchors.right: parent.right
-                anchors.rightMargin: 13
+            RowLayout {
+                Layout.topMargin: 23
+
+                ComboBox {
+                    id: comboBox
+                    model: menu.VideoTypeLabels
+                    onActivated: {
+                            console.log("Current index: " + comboBox.currentIndex)
+                            menu.CurrentIndex = comboBox.currentIndex
+                     }
+                }
             }
         }
     }
