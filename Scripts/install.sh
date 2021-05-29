@@ -18,6 +18,7 @@ apt update -qq
 echo -e " -- \e[33mInstalling dependencies\e[0m"
 apt install -y build-essential \
   clang-11 \
+  libfmt-dev \
   qtbase5-dev \
   qtdeclarative5-dev \
   qtmultimedia5-dev \

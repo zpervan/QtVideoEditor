@@ -16,8 +16,14 @@ jobs:
           chmod +x Scripts/install.sh
           sudo ./Scripts/install.sh
 
-      - name: Build Project | All
+      - name: Build Project | Release
         run: |
           mkdir -p build && cd build
-          cmake ..
+          cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/clang-11 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-11
+          cmake --build .
+
+      - name: Build Project | Debug
+        run: |
+          mkdir -p build && cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=/usr/bin/clang-11 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-11
           cmake --build .
