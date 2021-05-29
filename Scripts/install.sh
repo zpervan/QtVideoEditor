@@ -25,11 +25,10 @@ apt install -y build-essential \
   qml-module-qtquick-controls2 \
   libqt5svg5-dev \
   libopencv-dev
-  
-echo -e " -- \e[33mCreating temp folder\e[0m"
-mkdir temp && cd temp || exit
 
-echo -e " -- \e[33mCleanup\e[0m"
-cd .. && rm -rf temp || exit
+echo -e " -- \e[33mNew symlink to OpenCV4 library\e"
+# There is an issue where the symlink is not correct and creates errors while compiling the OpenCV4 code
+rm  /usr/local/include/opencv2
+ln -s /usr/include/opencv4/opencv2 /usr/local/include/opencv2
 
 echo -e " -- \e[32mSetup completed!\e[0m"
