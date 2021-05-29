@@ -6,13 +6,12 @@
 #include <iostream>
 #include <opencv4/opencv2/opencv.hpp>
 #include <string>
+#include <cassert>
 
 namespace thumbnail_creator {
 
 void CreateThumbnailFromVideo(const fs::path &file_path) {
-  if (!fs::exists(file_path)) {
-    fmt::print("Path does not exist: {} ", file_path.c_str());
-  }
+  assert(fs::exists(file_path) && fmt::format("Path does not exist: {} ", file_path.c_str()).c_str());
 
   /// @TODO: Refactor this a little bit...
   cv::Mat frame;
@@ -20,7 +19,7 @@ void CreateThumbnailFromVideo(const fs::path &file_path) {
   capture.read(frame);
 
   if (!frame.empty()) {
-    std::string picture_name{utility::path::CreateAssetsPictureFolder() += file_path.stem() += ".jpg"};
+    const std::string picture_name{utility::path::CreateAssetsPictureFolder() += file_path.stem() += ".jpg"};
     cv::imwrite(picture_name, frame);
   }
 }
