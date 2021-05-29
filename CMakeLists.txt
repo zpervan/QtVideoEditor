@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.16.3)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -7,12 +7,14 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(PROJECT_NAME QtVideoEditor)
+#set(CMAKE_FIND_DEBUG_MODE 1)
 
 project(${PROJECT_NAME} LANGUAGES CXX)
 
 find_package(Qt5 COMPONENTS Core Quick Widgets REQUIRED)
 
 add_subdirectory(GUI)
+add_subdirectory(Backend)
 
 add_executable(${PROJECT_NAME} main.cpp qml.qrc)
 
@@ -22,4 +24,5 @@ target_link_libraries(${PROJECT_NAME}
         PRIVATE Qt5::Core
         PRIVATE Qt5::Quick
         PRIVATE GUI_Lib
+        PRIVATE Backend_Lib
         )

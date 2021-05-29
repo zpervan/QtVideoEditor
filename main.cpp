@@ -1,3 +1,5 @@
+#include "Backend/thumbnail_creator.h"
+#include "Backend/utility.h"
 #include "GUI/menu.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -7,6 +9,9 @@
 int main(int argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
+
+  /// @TODO: Remove. Just for testing purposes.
+  thumbnail_creator::CreateThumbnailFromVideo( utility::path::CreateAssetsVideoFolder() += "SampleVideo_Bunny.mp4");
 
   Menu menu;
 
