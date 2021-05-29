@@ -85,16 +85,31 @@ Window {
 
                 delegate: Item {
                     Column {
-                        Rectangle {
+                        Button {
                             width: 120
                             height: 120
                             anchors.horizontalCenter: parent.horizontalCenter
-                            Image { 
-                                id: thumbnail 
+
+                            onClicked: {
+                             console.log("Video clicked")
+                            }
+
+                            Image {
                                 anchors.fill: parent
-                                cache: false 
+                                cache: false
                                 source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Pictures/example_picture.jpg"
-                            } 
+                            }
+                        }
+
+                        Button {
+                            text: "EDIT"
+                            width: 80
+                            height: 20
+                            anchors.horizontalCenter: parent.horizontalCenter
+
+                            onClicked: {
+                             console.log("EDIT clicked")
+                            }
                         }
 
                         Text {

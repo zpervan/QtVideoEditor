@@ -1,5 +1,5 @@
-set(HEADERS menu.h)
-set(SOURCES menu.cpp)
+set(HEADERS Code/menu.h)
+set(SOURCES Code/menu.cpp)
 
 add_library(GUI_Lib STATIC ${HEADERS} ${SOURCES})
 
