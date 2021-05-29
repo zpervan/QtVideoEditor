@@ -10,7 +10,7 @@
 
 namespace thumbnail_creator {
 
-void CreateThumbnailFromVideo(const fs::path &file_path) {
+static void CreateThumbnailFromVideo(const fs::path &file_path) {
   assert(fs::exists(file_path) && fmt::format("Path does not exist: {} ", file_path.c_str()).c_str());
 
   /// @TODO: Refactor this a little bit...
