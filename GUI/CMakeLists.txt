@@ -1,8 +1,20 @@
-set(HEADERS Code/menu.h)
-set(SOURCES Code/menu.cpp)
+project(GUI_Lib)
 
-add_library(GUI_Lib STATIC ${HEADERS} ${SOURCES})
+set(HEADERS
+        Code/menu.h
+        Code/video_list.h
+        )
+set(SOURCES
+        Code/menu.cpp
+        Code/video_list.cpp
+        )
 
-find_package(Qt5 COMPONENTS Core Quick REQUIRED)
-target_link_libraries(GUI_Lib PRIVATE Qt5::Core Qt5::Quick)
-target_compile_definitions(GUI_Lib PRIVATE QT_QML_DEBUG QT_DECLARATIVE_DEBUG)
+add_library(${PROJECT_NAME} STATIC ${HEADERS} ${SOURCES})
+
+target_link_libraries(${PROJECT_NAME}
+        PRIVATE Qt5::Core
+        PRIVATE Qt5::Quick
+        PRIVATE Backend_Lib
+        )
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE QT_QML_DEBUG QT_DECLARATIVE_DEBUG)

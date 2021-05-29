@@ -1,12 +1,18 @@
+project(Backend_Lib)
+
 set(HEADERS
         thumbnail_creator.h
         utility.h
         )
 
-add_library(Backend_Lib STATIC ${HEADERS})
+add_library(${PROJECT_NAME} STATIC ${HEADERS})
 
 find_package(OpenCV REQUIRED)
-target_include_directories(Backend_Lib PRIVATE ${OpenCV_INCLUDE_DIRS})
-target_link_directories(Backend_Lib PRIVATE ${OpenCV_DIR})
+target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_link_directories(${PROJECT_NAME} PRIVATE ${OpenCV_DIR})
 
-target_link_libraries(Backend_Lib PRIVATE ${OpenCV_LIBS} stdc++fs fmt)
+target_link_libraries(${PROJECT_NAME}
+        PRIVATE ${OpenCV_LIBS}
+        PRIVATE stdc++fs
+        PRIVATE fmt
+        )
