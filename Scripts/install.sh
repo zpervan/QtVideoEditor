@@ -24,6 +24,8 @@ apt install -y build-essential \
   qtmultimedia5-dev \
   qtquickcontrols2-5-dev \
   qml-module-qtquick-controls2 \
+  qml-module-qtmultimedia \
+  libqt5multimedia5-plugins \
   libqt5svg5-dev \
   libopencv-dev
 
