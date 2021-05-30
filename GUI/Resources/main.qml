@@ -94,7 +94,7 @@ Window {
 
                             Image {
                                 anchors.fill: parent
-                                source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Thumbnails/SampleVideo_Earth.jpg"
+                                source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Thumbnails/" + model.name + ".jpg"
                             }
                         }
 
@@ -119,7 +119,7 @@ Window {
             }
         }
     }
-    
+
     Popup {
         id: raw_video_popup
         x: 10
