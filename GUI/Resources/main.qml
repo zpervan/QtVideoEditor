@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs.qml 1.0
 import QtQuick.Controls 2.3
 //import custom.widget.menu 1.0
+import custom 1.0
 
 Window {
     visible: true
@@ -61,30 +62,20 @@ Window {
             height: 760
             clip: false
             visible: true
-            title: qsTr("Group Box")
+            title: qsTr("Videos")
 
             GridView {
-                id: gridView
+                id: videoGridView
                 anchors.topMargin: 16
                 anchors.fill: parent
                 cellHeight: 150
                 cellWidth: 150
-                model: ListModel {
-                    ListElement {
-                        name: "Grey"
-                    }
-
-                    ListElement {
-                        name: "Red"
-                    }
-
-                    ListElement {
-                        name: "Testing"
-                    }
-                }
+                model: VideoListModel { id: videoListModel}
 
                 delegate: Item {
                     Column {
+                        spacing: 10
+
                         Button {
                             width: 120
                             height: 120
@@ -96,8 +87,7 @@ Window {
 
                             Image {
                                 anchors.fill: parent
-                                cache: false
-                                source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Pictures/example_picture.jpg"
+                                source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Thumbnails/SampleVideo_Earth.jpg"
                             }
                         }
 
@@ -109,18 +99,17 @@ Window {
 
                             onClicked: {
                              console.log("EDIT clicked")
+
                             }
                         }
 
                         Text {
-                            x: 5
-                            text: name
+                            text: model.name
                             font.bold: true
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
-                        spacing: 10
                     }
-                }
+                }    
             }
         }
     }

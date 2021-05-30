@@ -2,11 +2,12 @@ project(GUI_Lib)
 
 set(HEADERS
         Code/menu.h
-        Code/video_list.h
+        Code/video_list_model.h
         )
+
 set(SOURCES
         Code/menu.cpp
-        Code/video_list.cpp
+        Code/video_list_model.cpp
         )
 
 add_library(${PROJECT_NAME} STATIC ${HEADERS} ${SOURCES})

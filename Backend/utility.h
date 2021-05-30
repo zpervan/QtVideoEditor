@@ -27,12 +27,12 @@ static fs::path CreateProjectRootPath() {
 
 /// @brief Creates a path to the video folder.
 static fs::path CreateAssetsVideoFolder() {
-  return {CreateProjectRootPath().append("Assets/Video/")};
+  return {CreateProjectRootPath().append("Assets/Videos/")};
 }
 
 /// @brief Creates a path to the pictures folder.
 static fs::path CreateAssetsPictureFolder() {
-  return {CreateProjectRootPath().append("Assets/Pictures/")};
+  return {CreateProjectRootPath().append("Assets/Thumbnails/")};
 }
 
 } // namespace utility::path

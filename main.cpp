@@ -1,6 +1,7 @@
 #include "Backend/thumbnail_creator.h"
 #include "Backend/utility.h"
 #include "GUI/Code/menu.h"
+#include "GUI/Code/video_list_model.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -10,14 +11,11 @@ int main(int argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
 
-  /// @TODO: Remove. Just for testing purposes.
-  thumbnail_creator::CreateThumbnailFromVideo( utility::path::CreateAssetsVideoFolder() += "SampleVideo_Bunny.mp4");
-
+  qmlRegisterType<VideoListModel>("custom", 1, 0, "VideoListModel");
   Menu menu;
 
   QQmlApplicationEngine engine;
   engine.rootContext()->setContextProperty("menu", &menu);
-
   engine.load("qrc:/GUI/Resources/main.qml");
 
   if (engine.rootObjects().isEmpty()) {
