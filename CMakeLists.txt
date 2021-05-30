@@ -17,7 +17,7 @@ find_package(Qt5 COMPONENTS Core Quick Widgets REQUIRED)
 add_subdirectory(GUI)
 add_subdirectory(Backend)
 
-add_executable(${PROJECT_NAME} main.cpp qml.qrc)
+add_executable(${PROJECT_NAME} main.cpp GUI/Resources/qml.qrc)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 

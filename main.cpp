@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
   QQmlApplicationEngine engine;
   engine.rootContext()->setContextProperty("menu", &menu);
-  engine.load("qrc:/GUI/Resources/main.qml");
+  engine.load("qrc:/main.qml");
 
   if (engine.rootObjects().isEmpty()) {
     return EXIT_FAILURE;
