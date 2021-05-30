@@ -3,15 +3,19 @@ import QtQuick.Window 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs.qml 1.0
 import QtQuick.Controls 2.3
+import QtMultimedia 5.12
 //import custom.widget.menu 1.0
 import custom 1.0
 
 Window {
+    id: main_window
     visible: true
     width: 1024
     height: 760
     color: "#c3c1c1"
     title: qsTr("Video Editor")
+
+    property string videoSelected: ""
 
     ColumnLayout {
         id: column_mainmenu
@@ -83,6 +87,9 @@ Window {
 
                             onClicked: {
                              console.log("Video clicked")
+                             videoSelected = model.name
+                             console.log("videoSelected: " + videoSelected)
+                             raw_video_popup.open()
                             }
 
                             Image {
@@ -98,8 +105,7 @@ Window {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             onClicked: {
-                             console.log("EDIT clicked")
-
+                                console.log("EDIT for " + model.name)
                             }
                         }
 
@@ -112,5 +118,35 @@ Window {
                 }    
             }
         }
+    }
+    
+    Popup {
+        id: raw_video_popup
+        x: 10
+        y: 10
+        width: main_window.width - 20
+        height: main_window.height - 20
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+        Rectangle {
+            width: parent.width
+            height: parent.height
+            color: "black"
+
+            MediaPlayer {
+                id: player
+                source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Videos/" + videoSelected + ".mp4"
+                autoPlay: true
+            }
+
+            VideoOutput {
+                id: videoOutput
+                source: player
+                anchors.fill: parent
+            }
+        }
+
     }
 }
