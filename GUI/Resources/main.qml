@@ -16,6 +16,8 @@ Window {
 
     property string videoSelected: ""
     property string projectRoot: ""
+    property int counter: 0
+    property bool playbackState: false
 
     ColumnLayout {
         id: column_mainmenu
@@ -106,8 +108,10 @@ Window {
 
                             onClicked: {
                                 console.log("EDIT for " + videoName)
+                                videoSelected = videoName
                                 projectRoot = projectRootPath
-                                edited_video_popup.open()
+                                edit_video_popup.open()
+                                timer_text.running = !timer_text.running
                             }
                         }
 
@@ -138,15 +142,67 @@ Window {
             color: "black"
 
             MediaPlayer {
-                id: player
-                source: "file:" + projectRoot + "/Assets/Videos/" + videoSelected + ".mp4"
-                autoPlay: true
+                id: mediaPlayer
+                source: {
+                    if(!projectRoot || !videoSelected)
+                    {
+                     console.log("No source defined")   
+                    } else {
+                        "file:" + projectRoot + "/Assets/Videos/" + videoSelected + ".mp4"
+                    }
+                }
+                autoPlay: false
+                autoLoad: true
             }
 
             VideoOutput {
                 id: videoOutput
-                source: player
+                source: mediaPlayer
                 anchors.fill: parent
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onPressed: {
+                    if(!playbackState)
+                    {
+                        playbackState = true
+                        mediaPlayer.play()
+                    } else {
+                        playbackState = false
+                        mediaPlayer.pause()
+                    }     
+                }   
+            }
+        }
+    }
+    
+    Popup {
+        id: edit_video_popup
+        x: 10
+        y: 10
+        width: main_window.width - 20
+        height: main_window.height - 20
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+        Timer {
+            id: timer_text
+            interval: 300
+            running: false
+            repeat: true
+            onTriggered: {counter = randomNumberGenerator.Generate}
+        }
+
+        GroupBox {
+            width: parent.width
+            height: parent.height
+            visible: true
+            title: "Edit video " + videoSelected
+
+            Label{
+                text: "Random numerical value: " + (counter).toFixed(1)
             }
         }
     } 
