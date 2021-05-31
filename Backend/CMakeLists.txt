@@ -2,7 +2,7 @@ project(Backend_Lib)
 
 set(HEADERS
         thumbnail_creator.h
-        utility.h
+        path_creator.h
         )
 
 add_library(${PROJECT_NAME} STATIC ${HEADERS})

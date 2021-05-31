@@ -1,5 +1,5 @@
+#include "Backend/path_creator.h"
 #include "Backend/thumbnail_creator.h"
-#include "Backend/utility.h"
 #include "GUI/Code/menu.h"
 #include "GUI/Code/video_list_model.h"
 #include <QGuiApplication>

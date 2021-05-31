@@ -1,13 +1,13 @@
 #ifndef QTVIDEOEDITOR_BACKEND_THUMBNAIL_CREATOR_H_
 #define QTVIDEOEDITOR_BACKEND_THUMBNAIL_CREATOR_H_
 
-#include "utility.h"
+#include "path_creator.h"
+#include <QString>
+#include <cassert>
 #include <fmt/format.h>
 #include <iostream>
 #include <opencv4/opencv2/opencv.hpp>
-#include <QString>
 #include <string>
-#include <cassert>
 
 namespace thumbnail_creator {
 
@@ -20,7 +20,7 @@ static QString CreateThumbnailFromVideo(const fs::path &file_path) {
   capture.read(frame);
 
   if (!frame.empty()) {
-    std::string picture_name{fs::path("file:") += utility::path::CreateAssetsPictureFolder() += file_path.stem() += ".jpg"};
+    std::string picture_name{fs::path("file:") += path_creator::PictureFolder() += file_path.stem() += ".jpg"};
     cv::imwrite(picture_name, frame);
     return {picture_name.c_str()};
   }

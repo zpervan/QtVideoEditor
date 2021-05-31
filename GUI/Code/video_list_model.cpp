@@ -9,7 +9,7 @@ VideoListModel::VideoListModel(QObject *parent) : QAbstractListModel(parent) {
 
 void VideoListModel::PopulateVideoElementsList() {
   qDebug() << "Populating VideoElementList";
-  const auto video_file_path = utility::path::CreateAssetsVideoFolder();
+  const auto video_file_path = path_creator::VideoFolder();
 
   for (const auto &video_file : fs::directory_iterator(video_file_path)) {
     VideoElementInformation video_element_information;

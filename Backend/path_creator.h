@@ -1,5 +1,5 @@
-#ifndef QTVIDEOEDITOR_BACKEND_UTILITY_H_
-#define QTVIDEOEDITOR_BACKEND_UTILITY_H_
+#ifndef QTVIDEOEDITOR_BACKEND_PATH_CREATOR_H_
+#define QTVIDEOEDITOR_BACKEND_PATH_CREATOR_H_
 
 #include <experimental/filesystem>
 
@@ -9,10 +9,10 @@ static const fs::path kGRootFolderName{"QtVideoEditor"};
 
 /// @brief Contains all auxiliary helper functions for generating and fetching
 /// various paths of specific files and folders.
-namespace utility::path {
+namespace path_creator {
 
 /// @brief Creates a project root path.
-static fs::path CreateProjectRootPath() {
+static fs::path ProjectRootPath() {
   fs::path root_folder_path;
   for (const auto &element : fs::current_path()) {
     if (element == kGRootFolderName) {
@@ -26,15 +26,15 @@ static fs::path CreateProjectRootPath() {
 }
 
 /// @brief Creates a path to the video folder.
-static fs::path CreateAssetsVideoFolder() {
-  return {CreateProjectRootPath().append("Assets/Videos/")};
+static fs::path VideoFolder() {
+  return {ProjectRootPath().append("Assets/Videos/")};
 }
 
 /// @brief Creates a path to the pictures folder.
-static fs::path CreateAssetsPictureFolder() {
-  return {CreateProjectRootPath().append("Assets/Thumbnails/")};
+static fs::path PictureFolder() {
+  return {ProjectRootPath().append("Assets/Thumbnails/")};
 }
 
-} // namespace utility::path
+} // namespace path
 
-#endif // QTVIDEOEDITOR_BACKEND_UTILITY_H_
+#endif // QTVIDEOEDITOR_BACKEND_PATH_CREATOR_H_
