@@ -3,11 +3,12 @@ project(Backend_Lib)
 set(HEADERS
         thumbnail_creator.h
         path_creator.h
-        random_number_generator.h
+        random_generator.h
+        types.h
         )
 
 set(SOURCE
-        random_number_generator.cpp
+        random_generator.cpp
         )
 
 add_library(${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE})

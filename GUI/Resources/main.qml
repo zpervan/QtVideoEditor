@@ -16,8 +16,12 @@ Window {
 
     property string videoSelected: ""
     property string projectRoot: ""
-    property int counter: 0
     property bool playbackState: false
+    property int numericalValue: 0
+    property string firstGradientColor: "grey"
+    property double firstGradientColorPosition: 0.95
+    property string secondGradientColor: "white"
+    property double secondGradientColorPosition: 0.25
 
     ColumnLayout {
         id: column_mainmenu
@@ -112,6 +116,7 @@ Window {
                                 projectRoot = projectRootPath
                                 edit_video_popup.open()
                                 timer_text.running = !timer_text.running
+                                timer_gradient.running = !timer_gradient.running 
                             }
                         }
 
@@ -146,7 +151,8 @@ Window {
                 source: {
                     if(!projectRoot || !videoSelected)
                     {
-                     console.log("No source defined")   
+                     console.log("No source defined")
+                     ""
                     } else {
                         "file:" + projectRoot + "/Assets/Videos/" + videoSelected + ".mp4"
                     }
@@ -192,7 +198,25 @@ Window {
             interval: 300
             running: false
             repeat: true
-            onTriggered: {counter = randomNumberGenerator.Generate}
+            onTriggered: {numericalValue = randomGenerator.GenerateNumber}
+        }
+
+        Timer {
+            id: timer_gradient
+            interval: 1000
+            running: false
+            repeat: true
+            onTriggered: {
+                firstGradientColor = randomGenerator.GenerateColor
+                firstGradientColorPosition = randomGenerator.GenerateNormalizedPosition
+                console.log("First gradient color: " + firstGradientColor)
+                console.log("First gradient color position: " + firstGradientColorPosition)
+                
+                secondGradientColor = randomGenerator.GenerateColor
+                secondGradientColorPosition = randomGenerator.GenerateNormalizedPosition
+                console.log("Second gradient color: " + secondGradientColor)
+                console.log("Second gradient color position: " + secondGradientColorPosition)
+            }
         }
 
         GroupBox {
@@ -202,7 +226,18 @@ Window {
             title: "Edit video " + videoSelected
 
             Label{
-                text: "Random numerical value: " + (counter).toFixed(1)
+                text: "Random numerical value: " + numericalValue
+            }
+
+            Rectangle{
+                y: 20
+                width: 100
+                height: 100
+                border.color: "black"
+                gradient: Gradient {
+                    GradientStop { position: firstGradientColorPosition; color: firstGradientColor }
+                    GradientStop { position: secondGradientColorPosition; color: secondGradientColor }
+                }
             }
         }
     } 

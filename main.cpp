@@ -1,5 +1,5 @@
 #include "Backend/path_creator.h"
-#include "Backend/random_number_generator.h"
+#include "Backend/random_generator.h"
 #include "Backend/thumbnail_creator.h"
 #include "GUI/Code/menu.h"
 #include "GUI/Code/video_list_model.h"
@@ -14,11 +14,11 @@ int main(int argc, char *argv[]) {
 
   qmlRegisterType<VideoListModel>("custom", 1, 0, "VideoListModel");
   Menu menu;
-  RandomNumberGenerator random_number_generator;
+  RandomGenerator random_generator;
 
   QQmlApplicationEngine engine;
   engine.rootContext()->setContextProperty("menu", &menu);
-  engine.rootContext()->setContextProperty("randomNumberGenerator", &random_number_generator);
+  engine.rootContext()->setContextProperty("randomGenerator", &random_generator);
   engine.load("qrc:/main.qml");
 
   if (engine.rootObjects().isEmpty()) {
