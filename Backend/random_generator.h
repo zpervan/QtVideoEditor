@@ -5,6 +5,7 @@
 #include <QObject>
 #include <random>
 
+/// @brief Contains all logic related to generating random integer and real numbers
 class RandomGenerator : public QObject {
   Q_OBJECT
   Q_PROPERTY(int GenerateNumber READ GenerateNumber CONSTANT)
@@ -15,8 +16,18 @@ public:
   explicit RandomGenerator(QObject *parent = nullptr);
 
 public slots:
+  /// @brief Generates a random integer number between 0 and 146
+  /// @return Randomly generated integer value
   int GenerateNumber();
+
+  /// @brief Returns a color name from the color map based on the randomly
+  /// generated integer value
+  /// @return Color name
   QString GenerateColor();
+
+  /// @brief Generated a real numeric value between 0.0 and 1.0 which is used
+  /// for the gradient color position
+  /// @return Gradient color position as a normalized value
   double GenerateNormalizedPosition();
 
 private:

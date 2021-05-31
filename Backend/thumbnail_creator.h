@@ -11,6 +11,8 @@
 
 namespace thumbnail_creator {
 
+/// @brief Creates a thumbnail picture in the assets folder from a video.
+/// @param file_path Location of the video
 static void VideoThumbnail(const fs::path &file_path) {
   assert(fs::exists(file_path) && fmt::format("Path does not exist: {} ", file_path.c_str()).c_str());
 
@@ -20,7 +22,8 @@ static void VideoThumbnail(const fs::path &file_path) {
   capture.read(frame);
 
   if (!frame.empty()) {
-    std::string picture_name{fs::path("file:") += path_creator::PictureFolder() += file_path.stem() += ".jpg"};
+    std::string picture_name{fs::path("file:") +=
+                             path_creator::ThumbnailsFolder() += file_path.stem() += ".jpg"};
     cv::imwrite(picture_name, frame);
   }
 }

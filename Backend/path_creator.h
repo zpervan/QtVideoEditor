@@ -7,11 +7,12 @@ namespace fs = std::experimental::filesystem;
 
 static const fs::path kGRootFolderName{"QtVideoEditor"};
 
-/// @brief Contains all auxiliary helper functions for generating and fetching
-/// various paths of specific files and folders.
+/// @brief Contains all helper functions for generating and fetching of various
+/// paths for specific files and folders.
 namespace path_creator {
 
-/// @brief Creates a project root path.
+/// @brief Generates a project root path
+/// @return Path of the project root
 static fs::path ProjectRoot() {
   fs::path root_folder_path;
   for (const auto &element : fs::current_path()) {
@@ -25,16 +26,18 @@ static fs::path ProjectRoot() {
   return root_folder_path;
 }
 
-/// @brief Creates a path to the video folder.
+/// @brief Creates a video folder path based on the project root path
+/// @return Videos folder path
 static fs::path VideoFolder() {
   return {ProjectRoot().append("Assets/Videos/")};
 }
 
-/// @brief Creates a path to the pictures folder.
-static fs::path PictureFolder() {
+/// @brief Creates a thumbnails folder path based on the project root path
+/// @return Path of the project root
+static fs::path ThumbnailsFolder() {
   return {ProjectRoot().append("Assets/Thumbnails/")};
 }
 
-} // namespace path
+} // namespace path_creator
 
 #endif // QTVIDEOEDITOR_BACKEND_PATH_CREATOR_H_
