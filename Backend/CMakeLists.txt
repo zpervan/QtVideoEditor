@@ -4,6 +4,7 @@ set(HEADERS
         thumbnail_creator.h
         path_creator.h
         random_generator.h
+        thumbnail_creator.h
         types.h
         )
 
