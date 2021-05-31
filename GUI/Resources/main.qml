@@ -266,8 +266,10 @@ Window {
             interval: 500
             running: false
             repeat: true
-            onTriggered: {progressBarValue = changeProgressBarValue()
-            console.log("Progress bar value: " + progressBarValue)}
+            onTriggered: {
+                progressBarValue = changeProgressBarValue()
+                console.log("Progress bar value: " + progressBarValue)
+            }
         }
 
         GroupBox {
@@ -299,14 +301,72 @@ Window {
                 value: progressBarValue
             }
 
+            Rectangle {
+                y: 160
+                width:  600
+                height: 400
+                color: "black"
+
+                MediaPlayer {
+                    id: mediaPlayerEdit
+                    source: "file:" + projectRoot + "/Assets/Videos/" + videoSelected + ".mp4"
+                    autoPlay: false
+                }
+
+                VideoOutput {
+                    id: videoOutputEdit
+                    source: mediaPlayerEdit
+                    anchors.fill: parent
+                }
+
+                Button{
+                    x: parent.width / 2 - 40
+                    y: parent.height - 60
+                    width: 80
+                    height: 40
+                    text: playbackState ? "PAUSE" : "PLAY"
+    
+                    onClicked: {
+                        if(!playbackState)
+                        {
+                            playbackState = true
+                            mediaPlayerEdit.play()
+                        } else {
+                            playbackState = false
+                            mediaPlayerEdit.pause()
+                        } 
+                    }
+
+                    background: Rectangle {
+                        color: parent.down ? "#bbbbbb" : (parent.hovered ? "#d6d6d6" : "#f6f6f6")
+                    }
+                }
+            }
+
+            
+
             Button{
                 y: parent.height - 40
                 text: "EXIT"
                 onClicked: {
                     timer_text.running = !timer_text.running
                     timer_gradient.running = !timer_gradient.running 
-                    timer_progress_bar.running = !timer_progress_bar.running 
+                    timer_progress_bar.running = !timer_progress_bar.running
+                    mediaPlayerEdit.stop()
                     edit_video_popup.close()
+                }
+
+                background: Rectangle {
+                    color: parent.down ? "#bbbbbb" : (parent.hovered ? "#d6d6d6" : "#f6f6f6")
+                }
+            }
+
+            Button{
+                y: parent.height - 40
+                x: parent.width - 160
+                text: "APPLY TO VIDEO"
+                onClicked: {
+                    console.log("APPLY TO VIDEO IS NOT IMPLEMENTED")
                 }
 
                 background: Rectangle {
