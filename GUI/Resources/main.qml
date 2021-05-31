@@ -22,6 +22,8 @@ Window {
     property double firstGradientColorPosition: 0.95
     property string secondGradientColor: "white"
     property double secondGradientColorPosition: 0.25
+    property int progressBarValue: 0
+    property bool isIncrementing: true
 
     ColumnLayout {
         id: column_mainmenu
@@ -117,6 +119,7 @@ Window {
                                 edit_video_popup.open()
                                 timer_text.running = !timer_text.running
                                 timer_gradient.running = !timer_gradient.running 
+                                timer_progress_bar.running = !timer_progress_bar.running 
                             }
                         }
 
@@ -209,14 +212,23 @@ Window {
             onTriggered: {
                 firstGradientColor = randomGenerator.GenerateColor
                 firstGradientColorPosition = randomGenerator.GenerateNormalizedPosition
-                console.log("First gradient color: " + firstGradientColor)
-                console.log("First gradient color position: " + firstGradientColorPosition)
-                
+                // console.log("First gradient color: " + firstGradientColor)
+                // console.log("First gradient color position: " + firstGradientColorPosition)
+
                 secondGradientColor = randomGenerator.GenerateColor
                 secondGradientColorPosition = randomGenerator.GenerateNormalizedPosition
-                console.log("Second gradient color: " + secondGradientColor)
-                console.log("Second gradient color position: " + secondGradientColorPosition)
+                // console.log("Second gradient color: " + secondGradientColor)
+                // console.log("Second gradient color position: " + secondGradientColorPosition)
             }
+        }
+
+        Timer {
+            id: timer_progress_bar
+            interval: 500
+            running: false
+            repeat: true
+            onTriggered: {progressBarValue = changeProgressBarValue()
+            console.log("Progress bar value: " + progressBarValue)}
         }
 
         GroupBox {
@@ -239,6 +251,32 @@ Window {
                     GradientStop { position: secondGradientColorPosition; color: secondGradientColor }
                 }
             }
+
+            ProgressBar{
+                y: 140
+                from: 0
+                to: 100
+                width: parent.width
+                value: progressBarValue
+            }
         }
-    } 
+    }
+
+    function changeProgressBarValue()
+    {
+        if(isIncrementing)
+        {
+            if(progressBarValue >= 99)
+            {
+                isIncrementing = false
+            }
+            return progressBarValue += 1
+        }else {
+             if(progressBarValue <= 1)
+            {
+                isIncrementing = false
+            }
+            return progressBarValue -= 1
+        }
+    }
 }
