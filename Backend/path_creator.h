@@ -12,7 +12,7 @@ static const fs::path kGRootFolderName{"QtVideoEditor"};
 namespace path_creator {
 
 /// @brief Creates a project root path.
-static fs::path ProjectRootPath() {
+static fs::path ProjectRoot() {
   fs::path root_folder_path;
   for (const auto &element : fs::current_path()) {
     if (element == kGRootFolderName) {
@@ -27,12 +27,12 @@ static fs::path ProjectRootPath() {
 
 /// @brief Creates a path to the video folder.
 static fs::path VideoFolder() {
-  return {ProjectRootPath().append("Assets/Videos/")};
+  return {ProjectRoot().append("Assets/Videos/")};
 }
 
 /// @brief Creates a path to the pictures folder.
 static fs::path PictureFolder() {
-  return {ProjectRootPath().append("Assets/Thumbnails/")};
+  return {ProjectRoot().append("Assets/Thumbnails/")};
 }
 
 } // namespace path

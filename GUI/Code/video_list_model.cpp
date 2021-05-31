@@ -14,10 +14,12 @@ void VideoListModel::PopulateVideoElementsList() {
   for (const auto &video_file : fs::directory_iterator(video_file_path)) {
     VideoElementInformation video_element_information;
     video_element_information.video_file_name = video_file.path().stem().c_str();
-    video_element_information.thumbnail_file_path = thumbnail_creator::CreateThumbnailFromVideo(video_file.path());
+    video_element_information.project_root_path = path_creator::ProjectRoot().c_str();
+
+    thumbnail_creator::VideoThumbnail(video_file.path());
 
     qDebug() << "Video file name: " << video_element_information.video_file_name;
-    qDebug() << "Thumbnail file name: " << video_element_information.thumbnail_file_path;
+    qDebug() << "Project root path: " << video_element_information.project_root_path;
 
     video_element_information_.append(std::move(video_element_information));
   }
@@ -25,8 +27,8 @@ void VideoListModel::PopulateVideoElementsList() {
 
 QHash<int, QByteArray> VideoListModel::roleNames() const {
   QHash<int, QByteArray> roles;
-  roles[kVideoFileName] = "name";
-  roles[kThumbnailFilePath] = "thumbnailPath";
+  roles[kVideoFileName] = "videoName";
+  roles[kProjectRootPath] = "projectRootPath";
   return roles;
 }
 
@@ -41,8 +43,8 @@ QVariant VideoListModel::data(const QModelIndex &index, int role) const {
   case VideoElementRoles::kVideoFileName:
     return {video_element.video_file_name};
 
-  case VideoElementRoles::kThumbnailFilePath:
-    return {video_element.thumbnail_file_path};
+  case VideoElementRoles::kProjectRootPath:
+    return {video_element.project_root_path};
 
   default:
     return QVariant();

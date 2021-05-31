@@ -7,7 +7,7 @@
 /// @brief Data container for storing information of a single video file
 struct VideoElementInformation {
   QString video_file_name;
-  QString thumbnail_file_path;
+  QString project_root_path;
 };
 
 /// @brief Contains all necessary logic to fetch the populated video list.
@@ -21,7 +21,7 @@ public:
   /// @brief Data roles for video element information
   enum VideoElementRoles {
     kVideoFileName = Qt::UserRole + 1,
-    kThumbnailFilePath
+    kProjectRootPath
   };
 
 public slots:

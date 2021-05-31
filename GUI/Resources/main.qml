@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs.qml 1.0
 import QtQuick.Controls 2.3
 import QtMultimedia 5.12
-//import custom.widget.menu 1.0
 import custom 1.0
 
 Window {
@@ -16,6 +15,7 @@ Window {
     title: qsTr("Video Editor")
 
     property string videoSelected: ""
+    property string projectRoot: ""
 
     ColumnLayout {
         id: column_mainmenu
@@ -75,7 +75,6 @@ Window {
                 cellHeight: 150
                 cellWidth: 150
                 model: VideoListModel { id: videoListModel}
-
                 delegate: Item {
                     Column {
                         spacing: 10
@@ -86,15 +85,16 @@ Window {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             onClicked: {
-                             console.log("Video clicked")
-                             videoSelected = model.name
-                             console.log("videoSelected: " + videoSelected)
-                             raw_video_popup.open()
+                                console.log("RAW video clicked")
+                                videoSelected = videoName
+                                projectRoot = projectRootPath
+                                console.log("videoSelected: " + videoSelected)
+                                raw_video_popup.open()
                             }
 
                             Image {
                                 anchors.fill: parent
-                                source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Thumbnails/" + model.name + ".jpg"
+                                source: "file:" + projectRootPath + "/Assets/Thumbnails/" + videoName + ".jpg"
                             }
                         }
 
@@ -105,12 +105,14 @@ Window {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             onClicked: {
-                                console.log("EDIT for " + model.name)
+                                console.log("EDIT for " + videoName)
+                                projectRoot = projectRootPath
+                                edited_video_popup.open()
                             }
                         }
 
                         Text {
-                            text: model.name
+                            text: videoName
                             font.bold: true
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
@@ -137,7 +139,7 @@ Window {
 
             MediaPlayer {
                 id: player
-                source: "file:/home/zvonimir/Programming/QtVideoEditor/Assets/Videos/" + videoSelected + ".mp4"
+                source: "file:" + projectRoot + "/Assets/Videos/" + videoSelected + ".mp4"
                 autoPlay: true
             }
 
@@ -147,6 +149,5 @@ Window {
                 anchors.fill: parent
             }
         }
-
-    }
+    } 
 }
