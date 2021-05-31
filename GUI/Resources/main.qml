@@ -25,6 +25,8 @@ Window {
     property int progressBarValue: 0
     property bool isIncrementing: true
 
+// ####################### MAIN MENU ####################### 
+
     ColumnLayout {
         id: column_mainmenu
         y: 0
@@ -56,6 +58,8 @@ Window {
             }
         }
     }
+
+// ####################### VIDEO SELECTION ####################### 
 
     Column {
         id: column_videosection
@@ -121,6 +125,10 @@ Window {
                                 timer_gradient.running = !timer_gradient.running 
                                 timer_progress_bar.running = !timer_progress_bar.running 
                             }
+
+                            background: Rectangle {
+                                color: parent.down ? "#bbbbbb" : (parent.hovered ? "#d6d6d6" : "#f6f6f6")
+                            }
                         }
 
                         Text {
@@ -134,6 +142,8 @@ Window {
         }
     }
 
+// ####################### RAW VIDEO POPUP ####################### 
+
     Popup {
         id: raw_video_popup
         x: 10
@@ -142,7 +152,7 @@ Window {
         height: main_window.height - 20
         modal: true
         focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        closePolicy: Popup.NoAutoClose
 
         Rectangle {
             width: parent.width
@@ -170,9 +180,14 @@ Window {
                 anchors.fill: parent
             }
 
-            MouseArea {
-                anchors.fill: parent
-                onPressed: {
+            Button{
+                x: parent.width / 2 - 40
+                y: parent.height - 60
+                width: 80
+                height: 40
+                text: playbackState ? "PAUSE" : "PLAY"
+   
+                onClicked: {
                     if(!playbackState)
                     {
                         playbackState = true
@@ -180,12 +195,36 @@ Window {
                     } else {
                         playbackState = false
                         mediaPlayer.pause()
-                    }     
-                }   
+                    } 
+                }
+
+                background: Rectangle {
+                    color: parent.down ? "#bbbbbb" : (parent.hovered ? "#d6d6d6" : "#f6f6f6")
+                }
+            }
+
+            Button{
+                x: parent.width - 40
+                y: 20
+                width: 20
+                height: 20
+                text: "X"
+
+                onClicked: {
+                    playbackState = false
+                    mediaPlayer.stop()
+                    raw_video_popup.close()
+                }
+
+                background: Rectangle {
+                    color: parent.down ? "#bbbbbb" : (parent.hovered ? "#d6d6d6" : "#f6f6f6")
+                }
             }
         }
     }
-    
+
+// ####################### EDIT VIDEO POPUP #######################    
+
     Popup {
         id: edit_video_popup
         x: 10
@@ -194,7 +233,7 @@ Window {
         height: main_window.height - 20
         modal: true
         focus: true
-        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        closePolicy: Popup.NoAutoClose
 
         Timer {
             id: timer_text
@@ -255,9 +294,24 @@ Window {
             ProgressBar{
                 y: 140
                 from: 0
-                to: 100
+                to: 10
                 width: parent.width
                 value: progressBarValue
+            }
+
+            Button{
+                y: parent.height - 40
+                text: "EXIT"
+                onClicked: {
+                    timer_text.running = !timer_text.running
+                    timer_gradient.running = !timer_gradient.running 
+                    timer_progress_bar.running = !timer_progress_bar.running 
+                    edit_video_popup.close()
+                }
+
+                background: Rectangle {
+                    color: parent.down ? "#bbbbbb" : (parent.hovered ? "#d6d6d6" : "#f6f6f6")
+                }
             }
         }
     }
@@ -266,15 +320,15 @@ Window {
     {
         if(isIncrementing)
         {
-            if(progressBarValue >= 99)
+            if(progressBarValue >= 9)
             {
                 isIncrementing = false
             }
             return progressBarValue += 1
-        }else {
-             if(progressBarValue <= 1)
+        } else {
+            if(progressBarValue <= 1)
             {
-                isIncrementing = false
+                isIncrementing = true
             }
             return progressBarValue -= 1
         }
