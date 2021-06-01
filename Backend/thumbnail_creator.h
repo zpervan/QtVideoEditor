@@ -23,7 +23,8 @@ static void VideoThumbnail(const fs::path &file_path) {
 
   if (!frame.empty()) {
     std::string picture_name{fs::path("file:") +=
-                             path_creator::ThumbnailsFolder() += file_path.stem() += ".jpg"};
+                             path_creator::ThumbnailsFolder() +=
+                             file_path.stem() += ".jpg"};
     cv::imwrite(picture_name, frame);
   }
 }

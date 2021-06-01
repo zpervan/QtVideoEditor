@@ -27,7 +27,7 @@ public slots:
 
   /// @brief Generated a real numeric value between 0.0 and 1.0 which is used
   /// for the gradient color position
-  /// @return Gradient color position as a normalized value
+  /// @return ApplyGradient color position as a normalized value
   double GenerateNormalizedPosition();
 
 private:
