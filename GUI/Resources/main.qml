@@ -24,6 +24,12 @@ Window {
     property double secondGradientColorPosition: 0.25
     property int progressBarValue: 0
     property bool isIncrementing: true
+    property bool applyBlur: false
+    property bool applyGradient: false
+    property int filterFlag: 0
+    property int filterProgressBarMaxValue: 0
+    property int filterProgressBarCurrentValue: 0
+    property string editedVideoFile: "file:" + projectRoot + "/Assets/Videos/" + videoSelected + "_edited.mp4"
 
 // ####################### MAIN MENU ####################### 
 
@@ -83,8 +89,8 @@ Window {
                 id: videoGridView
                 anchors.topMargin: 16
                 anchors.fill: parent
-                cellHeight: 150
-                cellWidth: 150
+                cellHeight: 170
+                cellWidth: 145
                 model: VideoListModel { id: videoListModel}
                 delegate: Item {
                     Column {
@@ -263,10 +269,7 @@ Window {
             interval: 500
             running: false
             repeat: true
-            onTriggered: {
-                progressBarValue = changeProgressBarValue()
-                console.log("Progress bar value: " + progressBarValue)
-            }
+            onTriggered: progressBarValue = changeProgressBarValue()
         }
 
         GroupBox {
@@ -307,14 +310,14 @@ Window {
                 color: "black"
 
                 MediaPlayer {
-                    id: mediaPlayerEdit
-                    source: "file:" + projectRoot + "/Assets/Videos/" + videoSelected + ".mp4"
+                    id: media_player_edit
+                    source: editedVideoFile
                     autoPlay: false
                 }
 
                 VideoOutput {
                     id: videoOutputEdit
-                    source: mediaPlayerEdit
+                    source: media_player_edit
                     anchors.fill: parent
                 }
 
@@ -329,10 +332,10 @@ Window {
                         if(!playbackState)
                         {
                             playbackState = true
-                            mediaPlayerEdit.play()
+                            media_player_edit.play()
                         } else {
                             playbackState = false
-                            mediaPlayerEdit.pause()
+                            media_player_edit.pause()
                         } 
                     }
 
@@ -350,10 +353,32 @@ Window {
                 ColumnLayout {  
                     CheckBox {
                         text: "Blur"
+                        onClicked: {
+                            if(!applyBlur)
+                            {
+                                applyBlur = true
+                                filterFlag += 1
+                            }else{
+                                applyBlur = false
+                                filterFlag -= 1 
+                            }
+                            console.log("Blur checkbox: " + filterFlag)
+                        }
                     }
 
                     CheckBox {
                         text: "Gradient"
+                         onClicked: {
+                            if(!applyGradient)
+                            {
+                                applyGradient = true
+                                filterFlag += 2
+                            }else{
+                                applyGradient = false
+                                filterFlag -= 2 
+                            }
+                            console.log("Gradient checkbox: " + filterFlag)
+                        }
                     }    
                 }
             }
@@ -365,7 +390,7 @@ Window {
                     timer_text.running = !timer_text.running
                     timer_gradient.running = !timer_gradient.running 
                     timer_progress_bar.running = !timer_progress_bar.running
-                    mediaPlayerEdit.stop()
+                    media_player_edit.stop()
                     edit_video_popup.close()
                 }
 
@@ -378,12 +403,23 @@ Window {
                 y: parent.height - 40
                 x: parent.width - 160
                 text: "APPLY TO VIDEO"
-                onClicked: {
-                    console.log("APPLY TO VIDEO IS NOT IMPLEMENTED")
-                }
+                onClicked: applyVideoFilter()
 
                 background: Rectangle {
                     color: parent.down ? "#bbbbbb" : (parent.hovered ? "#d6d6d6" : "#f6f6f6")
+                }
+            }
+
+            GroupBox{
+                title: qsTr("Filtering progress")
+                y: edit_video_player.height + 170
+                width: parent.width
+                ProgressBar{
+                    id: filter_progress_bar
+                    width: parent.width
+                    from: 0
+                    to: filterProgressBarMaxValue
+                    value: filterProgressBarCurrentValue
                 }
             }
         }
@@ -405,5 +441,37 @@ Window {
             }
             return progressBarValue -= 1
         }
+    }
+
+    function applyVideoFilter()
+    {   
+        filterProgressBarCurrentValue = 0
+        var filename = projectRoot + "/Assets/Videos/" + videoSelected + ".mp4"
+        
+        console.log("Applying filters...")
+        if(filterFlag == 1)
+        {
+            filterProgressBarMaxValue = 1
+            videoFilters.ApplyBlur(filename)
+            filterProgressBarCurrentValue += 1
+        }
+
+        if(filterFlag == 2)
+        {
+            filterProgressBarMaxValue = 1
+            videoFilters.ApplyMorphologicalTransformation(filename)
+            filterProgressBarCurrentValue += 1
+        }
+
+        if(filterFlag == 3)
+        {
+            filterProgressBarMaxValue = 2
+            videoFilters.ApplyBlur(filename)
+            filterProgressBarCurrentValue += 1
+            videoFilters.ApplyMorphologicalTransformation(filename)
+            filterProgressBarCurrentValue += 1
+        }
+
+        console.log("Applying filters... DONE!")
     }
 }

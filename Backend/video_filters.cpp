@@ -7,10 +7,15 @@
 VideoFilters::VideoFilters(QObject *parent) : QObject(parent) {}
 
 void VideoFilters::ApplyBlur(const QString &video_file_path) {
-  Initialize({video_file_path.toStdString()});
-  qDebug() << "Applying ApplyBlur video filter";
-  edited_video_file_path_ += "_edited_blur.mp4";
-  video_output_.open(edited_video_file_path_.toStdString(), mp4_codec_, fps_, frame_size_);
+  qDebug() << "[BLUR] Applying filter";
+  Initialize(video_file_path.toStdString());
+
+  if (!edited_video_file_path_.contains("edited")) {
+    qDebug() << "[BLUR] Edited file does not exist";
+    edited_video_file_path_ += "_edited.mp4";
+  }
+
+  video_output_.open(edited_video_file_path_.toStdString(), mp4_codec_, fps_,frame_size_);
 
   const cv::Size2i kernel = {15, 15};
   const int sigma = 0;
@@ -23,21 +28,21 @@ void VideoFilters::ApplyBlur(const QString &video_file_path) {
     video_output_.write(edited_video_frame_);
   }
 
-  blurred_video_file_path_ = edited_video_file_path_;
   video_capture_.release();
   video_output_.release();
   emit blurVideoFilterApplied();
 }
 
-QString VideoFilters::GetBlurredVideoFilePath() const {
-  return blurred_video_file_path_;
-}
+void VideoFilters::ApplyMorphologicalTransformation(const QString &video_file_path) {
+  qDebug() << "[MORPH] Applying filter";
+  Initialize(video_file_path.toStdString());
 
-void VideoFilters::ApplyGradient(const QString &video_file_path) {
-  Initialize({video_file_path.toStdString()});
-  qDebug() << "Applying ApplyGradient video filter";
-  edited_video_file_path_ += "_edited_gradient.mp4";
-  video_output_.open(edited_video_file_path_.toStdString(), mp4_codec_, fps_, frame_size_);
+  if (!edited_video_file_path_.contains("edited")) {
+    qDebug() << "[MORPH] Edited file does not exist";
+    edited_video_file_path_ += "_edited.mp4";
+  }
+
+  video_output_.open(edited_video_file_path_.toStdString(), mp4_codec_, fps_,frame_size_);
 
   const int morph_size = 2;
   cv::Mat element = getStructuringElement(
@@ -53,19 +58,14 @@ void VideoFilters::ApplyGradient(const QString &video_file_path) {
     video_output_.write(edited_video_frame_);
   }
 
-  gradient_video_file_path_ = edited_video_file_path_;
   video_capture_.release();
   video_output_.release();
-  emit gradientVideoFilterApplied();
+  emit morphologicalVideoFilterApplied();
 }
 
-QString VideoFilters::GetGradientVideoFilePath() const {
-  return gradient_video_file_path_;
-}
-
-void VideoFilters::Initialize(fs::path const &video_file_path) {
+void VideoFilters::Initialize(const fs::path &video_file_path) {
   qDebug() << "Initializing video filter functionality...";
-  assert(fs::exists(video_file_path) && fmt::format("Path does not exist: {} ", video_file_path.c_str()).c_str());
+  assert( fs::exists(video_file_path) && fmt::format("Path does not exist: {} ", video_file_path.c_str()).c_str());
 
   source_video_file_path_ = video_file_path.c_str();
   edited_video_file_path_ = (path_creator::VideoFolder().string() + video_file_path.stem().string()).c_str();
