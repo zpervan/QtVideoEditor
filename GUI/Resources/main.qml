@@ -51,7 +51,6 @@ Window {
                     id: comboBox
                     model: menu.VideoTypeLabels
                     onActivated: {
-                            console.log("Current index: " + comboBox.currentIndex)
                             menu.CurrentIndex = comboBox.currentIndex
                      }
                 }
@@ -89,7 +88,7 @@ Window {
                 model: VideoListModel { id: videoListModel}
                 delegate: Item {
                     Column {
-                        spacing: 10
+                        spacing: 5
 
                         Button {
                             width: 120
@@ -97,10 +96,8 @@ Window {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             onClicked: {
-                                console.log("RAW video clicked")
                                 videoSelected = videoName
                                 projectRoot = projectRootPath
-                                console.log("videoSelected: " + videoSelected)
                                 raw_video_popup.open()
                             }
 
@@ -117,7 +114,6 @@ Window {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             onClicked: {
-                                console.log("EDIT for " + videoName)
                                 videoSelected = videoName
                                 projectRoot = projectRootPath
                                 edit_video_popup.open()
@@ -134,6 +130,7 @@ Window {
                         Text {
                             text: videoName
                             font.bold: true
+                            font.pixelSize: 12
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
@@ -294,6 +291,7 @@ Window {
             }
 
             ProgressBar{
+                id: progress_bar
                 y: 140
                 from: 0
                 to: 10
@@ -302,6 +300,7 @@ Window {
             }
 
             Rectangle {
+                id: edit_video_player
                 y: 160
                 width:  600
                 height: 400
@@ -342,8 +341,22 @@ Window {
                     }
                 }
             }
-
             
+            GroupBox{
+                x: edit_video_player.width + 20
+                y: progress_bar.y + 20
+                width: 300
+                title: qsTr("Filters")
+                ColumnLayout {  
+                    CheckBox {
+                        text: "Blur"
+                    }
+
+                    CheckBox {
+                        text: "Gradient"
+                    }    
+                }
+            }
 
             Button{
                 y: parent.height - 40
