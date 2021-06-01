@@ -6,10 +6,12 @@ set(HEADERS
         random_generator.h
         thumbnail_creator.h
         types.h
+        video_filters.h
         )
 
 set(SOURCE
         random_generator.cpp
+        video_filters.cpp
         )
 
 add_library(${PROJECT_NAME} STATIC ${HEADERS} ${SOURCE})
